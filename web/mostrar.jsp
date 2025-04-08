@@ -12,16 +12,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!eeeee</h1>
+        <h1>Hello World!hhghhheeeee</h1>
 
 
 <%@ page import="java.util.*" %> 
-<% 
-    String[] stringArray = (String[]) request.getAttribute("stringArray"); 
-    for (String value : stringArray) { 
-        out.println(value + "<br>"); 
-    } 
-%> 
+
+<p><%
+    out.print(request.getAttribute("correox"));
+    %></p>
 
 
     </body>
