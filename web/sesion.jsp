@@ -1,4 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,10 +35,6 @@
 </thead>
 </table>    
 
-
-
-
-
 <div class="login-page">
     <div class="container">
         <div class="row">
@@ -47,7 +48,13 @@
                                 
                                 <form action="controller" method="post" class="row g-4">
                                     <div class="col-12">
+
                                         <label>Correo</label>
+                                        
+                                        <c:if test="${mensx == 1}">
+                                              <label style="color:red"> <c:out value="${mens}" /> </label>                                               
+                                        </c:if>
+
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
                                             <input type="email" name="mail" class="form-control" placeholder="Ingrese CORREO" required>
@@ -95,8 +102,6 @@
         </div>
     </div>
 </div>
-
-
 
 <br><br><center><footer style="color:cornflowerblue;"> © Desarrollado para IPChile </footer></center>
 <script src="bootstrap/js/bootstrap.bundle.min.js"></script>

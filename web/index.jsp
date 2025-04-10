@@ -117,11 +117,12 @@
 
 <br><br>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-5 g-4">
     <div class="card">
         <img class="card-img-top" src="images/sheraton.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">Hotel Sheraton</h5>
+            <img src="images/cinco.jpg">
             <p class="card-text">Descubre el paraíso junto al mar en la costa central chilena desde el Sheraton Miramar Hotel & Convention Center.</p>
         </div>
         <div class="nav">
@@ -133,6 +134,7 @@
         <img class="card-img-top" src="images/ayca.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">Hotel Ayca</h5>
+            <img src="images/tres.jpg">
             <p class="card-text">AYCA LA FLORA es un hotel boutique con un amplio e idílico jardín y vistas a los cerros y al puerto de Valparaíso.</p>
         </div>
         <div class="nav">
@@ -144,6 +146,7 @@
         <img class="card-img-top" src="images/eurotel.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">Hotel Eurotel</h5>
+            <img src="images/cuatro.jpg">
             <p class="card-text">El Eurotel está en Las Condes, el centro financiero y zona gastronómica más importante de Santiago de Chile.</p>
         </div>
         <div class="nav">
@@ -155,6 +158,7 @@
         <img class="card-img-top" src="images/kenedy.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">Hotel Kennedy</h5>
+            <img src="images/cinco.jpg">
             <p class="card-text">El Hotel Kennedy está ubicado en Santiago, en un barrio residencial en el hermoso sector oriente de la capital.</p>
         </div>
         <div class="nav">
@@ -166,6 +170,7 @@
         <img class="card-img-top" src="images/novotel.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">Hotel Novotel</h5>
+            <img src="images/cuatro.jpg">
             <p class="card-text">Novotel se encuentra ubicado a unos minutos de la plaza de Viña del Mar, que es considerada unas de las ciudades más turísticas del pais.</p>
         </div>
         <div class="nav">

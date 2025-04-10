@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,40 +57,46 @@ public class session extends HttpServlet {
 
             if (opcion == 11) {
 
-            // VALIDAMOS USUARIO SI EXISTE POR EL CORREO
+                // VALIDAMOS USUARIO SI EXISTE POR EL CORREO
                 try {
                     //ENCRIPTO PASSWORD
                     MessageDigest md = MessageDigest.getInstance("SHA-256");
-
                     byte[] hashedBytes = md.digest(passw.getBytes());
                     StringBuilder sb = new StringBuilder();
-
                     for (byte b : hashedBytes) {
                         sb.append(String.format("%02x", b));
                     }
-
                     String passwordHash = sb.toString();
 
-                    String qx = "select * from usuarios where mail = '" + mail + "' && password = '" + passwordHash + "'";
+                    String qx = "select * from usuarios where mail = ? && password = '" + passwordHash + "'";
+
                     try {
-                        set = con.createStatement();
-                        rs = set.executeQuery(qx);
+                        PreparedStatement pstmt = con.prepareStatement(qx);
+                        pstmt.setString(1, mail);
+                        ResultSet results = pstmt.executeQuery();
 
-                        if (rs.next()) {
+                        if (results.next()) {
 
-                            String nombre = rs.getString("nombre");
-
-                            Usuario usu = new Usuario(nombre, mail, passw);
+                            String id_usu = results.getString("id");
+                            String nombre = results.getString("nombre");
+                            Usuario usu = new Usuario(nombre, mail, id_usu);
                             HttpSession session = request.getSession();
                             session.setAttribute("usuario", usu);
+                            session.setAttribute("usuariox", nombre);
+                            session.setAttribute("id_usux", id_usu);
+                            session.setAttribute("filtro", 0);
+//                            request.setAttribute("id_usux", id_usu);
 
-                            RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp?nom=" + nombre);
+                            RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
                             rd.forward(request, response);
 
                         } else {
+                            
+                            String xxx = "CREDENCIALES INCORRECTAS ! ";
+                            request.setAttribute("mens", xxx);
+                            request.setAttribute("mensx", 1);
 
-                            String xxx = "CORREO NO EXISTE ! ";
-                            RequestDispatcher rd = request.getRequestDispatcher("sesion.jsp?xxx=" + xxx);
+                            RequestDispatcher rd = request.getRequestDispatcher("sesion.jsp");
                             rd.forward(request, response);
 
                         }

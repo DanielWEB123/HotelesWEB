@@ -4,15 +4,19 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true" %>
-<!DOCTYPE html>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+
+<!DOCTYPE html>
 
 <%
     if (session.getAttribute("usuario") == null) {
         request.getRequestDispatcher("sesion.jsp").forward(request, response);
     }
 %>
-
 
 <html>
     <head>
@@ -39,46 +43,85 @@
 
             <br>
             <center>
-                <h4> <% out.print(request.getParameter("nom")); %></h4>
+                <h4>${usuariox}</h4>
             </center>
 
         </tr>
     </thead>
 </table>    
 
+    <center> 
+       <img src="images/reserva.jpg" alt="Card image cap">    
+    </center>
+   
+    <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
 
+        <%
+            Connection con;
+            String url = "jdbc:mysql://localhost:3306/bd_hoteles";
+            String Driver = "com.mysql.jdbc.Driver";
+            String user = "root";
+            String clave = "dan123";
+            Class.forName(Driver);
+            con = DriverManager.getConnection(url, user, clave);
 
-<table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
-    </tbody>
-</table>
+            PreparedStatement ps;
+            ResultSet rs;
 
+//            int id_usux = Integer.parseInt((String)request.getAttribute("id_usu"));
+            String id_usux = (String)session.getAttribute("id_usux");
+            
+            ps = con.prepareStatement("select * from reservacion where id_usuario = " + id_usux + "");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {%>
+
+        <div class="card">
+            <%
+
+                int id_habitacionx = Integer.parseInt(rs.getString("id_habitacion"));
+
+                PreparedStatement qx;
+                ResultSet rsx;
+                qx = con.prepareStatement("select * from habitacion where id = " + id_habitacionx + "");
+                rsx = qx.executeQuery();
+
+                if (rsx.next()) {
+
+                    int id_hotelx = Integer.parseInt(rsx.getString("id_hotel"));
+
+                    PreparedStatement qxx;
+                    ResultSet rsxx;
+                    qxx = con.prepareStatement("select * from hoteles where id = " + id_hotelx + "");
+                    rsxx = qxx.executeQuery();
+
+                    if (rsxx.next()) { %>
+
+                       <div class="card-body">
+                       <h5 class="card-title"><%= rsxx.getString("nombre")%></h5>
+                       <img src="images/<%= rsxx.getString("categ")%>.jpg">
+                       </div>
+                       <img class="card-img-top" src="images/<%= rsxx.getString("imagen")%>" alt="Card image cap">
+                       <div class="card-body">
+
+                           <h6 class="card-title">Habitación: <%= rsx.getString("tipo")%></h6>
+                           <h6 class="card-title">N° Habitac: <%= rsx.getString("num_cam")%> - N° Baños: <%= rsx.getString("num_ban")%></h6>
+                           Ingreso: <fmt:formatDate value="<%= rs.getDate("fecha_ingreso")%>" pattern="dd-MM-yyyy" /><br> 
+                           Salida: <fmt:formatDate value="<%= rs.getDate("fecha_salida")%>" pattern="dd-MM-yyyy" /><br> 
+                           <h6 class="card-title">Valor: $ <fmt:formatNumber value="<%= rsx.getString("precio")%>" /></h6> 
+                       
+                       <% }
+                } %>
+
+            </div>
+            <div class="nav">
+                <button type="button" class="btn btn-warning">Anular</button>
+            </div>
+        </div>
+        <%}%>
+    </div>
+    
+<br><br>
 
 <table class="table table-success table-striped">
 
@@ -141,6 +184,9 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="id_usu" value=${id_usu} />
+                    <input type="hidden" name="opcion" value=1 />
+
                     <div class="col-auto">
                         <button type="submit" class="btn btn-secondary btn-lg">Buscar</button>
                     </div>
@@ -157,89 +203,75 @@
 <br><br>
 
 
-<table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">HOTEL</th>
-            <th scope="col">TIPO HABC</th>
-            <th scope="col">N° HABIT</th>
-            <th scope="col">N° BAÑOS</th>
-            <th scope="col">VALOR $ DIA</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
+<c:if test="${filtro != 0}">
 
-        <%
-            Connection con;
-            String url = "jdbc:mysql://localhost:3306/bd_hoteles";
-            String Driver = "com.mysql.jdbc.Driver";
-            String user = "root";
-            String clave = "dan123";
-            Class.forName(Driver);
-            con = DriverManager.getConnection(url, user, clave);
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">HOTEL</th>
+                <th scope="col">TIPO HABC</th>
+                <th scope="col">N° HABIT</th>
+                <th scope="col">N° BAÑOS</th>
+                <th scope="col">VALOR $ DIA</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
 
-            PreparedStatement ps;
-            ResultSet rs;
-
-            ps = con.prepareStatement("select * from habitacion");
-            rs = ps.executeQuery();
-
-            while (rs.next()) {%>
-
-        <tr>
-            <th scope="row"></th>
-
+            
             <%
 
-            int idx = Integer.parseInt(rs.getString("id_hotel"));
+                PreparedStatement psxs;
+                ResultSet rsxs;
+
+//                String ciux = request.getParameter("Ciudad");
+                String ciux = (String)request.getAttribute("Ciudad");
                 
-            PreparedStatement qx;
-                ResultSet rsx;
-                qx = con.prepareStatement("select * from hoteles where id = " + idx + "");
-                rsx = qx.executeQuery();
+                psxs = con.prepareStatement("select * from hoteles where ubicacion = '" + ciux + "'");
+                rsxs = psxs.executeQuery();
 
-                if (rsx.next()) {
-                    %> <td><img class="img-thumbnail" style="max-width: 150px; height: auto" src="images/<%= rsx.getString("imagen")%>" alt="Card image cap"></td> <%
-                  %> <td> <%= rsx.getString("nombre")%> </td> <%
-                }
-            %>
+                while (rsxs.next()) {%>
 
-            <td><%= rs.getString("tipo")%></td>
-            <td><%= rs.getString("num_cam")%></td>
-            <td><%= rs.getString("num_ban")%></td>
-            <td><%= rs.getString("precio")%></td>
-            <td><button type="button" class="btn btn-success">Reservar</button></td>
-        </tr>
-        <% }%>
-    </tbody>
+            <tr>
+                <th scope="row"></th>
 
-</table>
+                <%
 
+                    int idxx = Integer.parseInt(rsxs.getString("id"));
+  //                  int n_camx = Integer.parseInt((String)request.getAttribute("num_cam"));
+  //                  int n_banx = Integer.parseInt((String)request.getAttribute("num_ban"));
 
+                    PreparedStatement qxx;
+                    ResultSet rsxx;
+//                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + n_camx + " && num_ban = " + n_banx + "");
+                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + "");
+                    rsxx = qxx.executeQuery();
 
-<p><%
-    //out.print(session.getAttribute("nombre"));
-//    String namee = (String) session.getAttribute("nombre");
-//    out.print(namee);
-    %></p>
-<p><%
-//    out.print((Usuario)request.getAttribute("f_ini"));
-    %></p>
-<p><%    out.print(request.getAttribute("nom"));
-    %></p>
-<p><%
-    out.print(request.getParameter("nom"));
-    %></p>
-<p><%
-    out.print(request.getAttribute("mail"));
-    %></p>
+                    if (rsxx.next()) {
+                      %> <td><img class="img-thumbnail" style="max-width: 150px; height: auto" src="images/<%= rsxs.getString("imagen")%>" alt="Card image cap"></td> <%
+                      %> <td> <%= rsxs.getString("nombre")%> </td>
+
+                <td><%= rsxx.getString("tipo")%></td>
+                <td><%= rsxx.getString("num_cam")%></td>
+                <td><%= rsxx.getString("num_ban")%></td>
+                <td>$ <fmt:formatNumber value="<%= rsxx.getString("precio")%>" /> </td>
+                    
+                    <%
+                    }
+                %>
+
+                <td><button type="button" class="btn btn-success">Reservar</button></td>
+            </tr>
 
 
+            <% }%>
+        </tbody>
 
+    </table>
 
+</c:if>
 
 
 <br><br><center><footer style="color:cornflowerblue;"> © Desarrollado para IPChile </footer></center>

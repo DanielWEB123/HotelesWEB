@@ -20,6 +20,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.*;
 
+
+
 public class crud_usuarios extends HttpServlet {
 
     //Variablesd Globales
@@ -89,6 +91,8 @@ public class crud_usuarios extends HttpServlet {
 
                     try {
 
+//                        sql_injection_regex = re.compile(r"['";:\-\(\)\(\}\[\]\<\>\*\=\+'%]");
+                        
                         String q = "insert into usuarios (nombre,mail,password,celular,tipo) values ('" + nom + "','" + mail + "','" + passwordHash + "','" + celu + "','" + tipo + "')";
                         set.executeUpdate(q);
 

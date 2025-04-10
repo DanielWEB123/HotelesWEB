@@ -27,10 +27,15 @@ public class controller extends HttpServlet {
                 request.setAttribute("Ciudad", request.getParameter("ciudad"));
                 request.setAttribute("f_ini", request.getParameter("f_ini"));
                 request.setAttribute("f_ter", request.getParameter("f_ter"));
-                request.setAttribute("num_hab", request.getParameter("num_hab"));
+                request.setAttribute("num_cam", request.getParameter("num_cam"));
                 request.setAttribute("num_ban", request.getParameter("num_ban"));
+//                request.setAttribute("id_usu", request.getParameter("id_usu"));
+                request.setAttribute("filtro", 1);
 
-                RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac.jsp");
+                String id_usux = request.getParameter("id_usu");
+                request.setAttribute("id_usux", id_usux);
+                
+                RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
                 rd.forward(request, response);
                 break;
             }
