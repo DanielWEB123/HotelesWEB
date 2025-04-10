@@ -149,7 +149,7 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="date" class="form-control"/>
+                            <input name="f_ini" type="date" class="form-control"/>
                             <label for="floatingSelectGrid">Fecha Inicio</label>
                         </div>
                     </div>
@@ -157,25 +157,25 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input type="date" class="form-control"/>
+                            <input name="f_term" type="date" class="form-control"/>
                             <label for="floatingSelectGrid">Fecha Termino</label>
                         </div>
                     </div>
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                            <select name="num_cam" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
                                 <option value="1" selected>1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
-                            <label for="floatingSelectGrid">Habitaciones</label>
+                            <label for="floatingSelectGrid">Camas</label>
                         </div>
                     </div>
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <select required class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                            <select name="num_ban" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
                                 <option value="1" selected>1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -232,41 +232,53 @@
                 psxs = con.prepareStatement("select * from hoteles where ubicacion = '" + ciux + "'");
                 rsxs = psxs.executeQuery();
 
-                while (rsxs.next()) {%>
-
-            <tr>
-                <th scope="row"></th>
-
-                <%
+                while (rsxs.next()) {
 
                     int idxx = Integer.parseInt(rsxs.getString("id"));
-  //                  int n_camx = Integer.parseInt((String)request.getAttribute("num_cam"));
-  //                  int n_banx = Integer.parseInt((String)request.getAttribute("num_ban"));
+                    String n_camx = (String)request.getAttribute("num_cam");
+                    String n_banx = (String)request.getAttribute("num_ban");
 
                     PreparedStatement qxx;
                     ResultSet rsxx;
-//                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + n_camx + " && num_ban = " + n_banx + "");
-                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + "");
+//                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + (Integer)request.getAttribute("num_cam") + " && num_ban = " + (Integer)request.getAttribute("num_hab") + "");
+                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + n_camx + " && num_ban = " + n_banx + "");
+//                    qxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + "");
                     rsxx = qxx.executeQuery();
 
-                    if (rsxx.next()) {
-                      %> <td><img class="img-thumbnail" style="max-width: 150px; height: auto" src="images/<%= rsxs.getString("imagen")%>" alt="Card image cap"></td> <%
-                      %> <td> <%= rsxs.getString("nombre")%> </td>
-
-                <td><%= rsxx.getString("tipo")%></td>
-                <td><%= rsxx.getString("num_cam")%></td>
-                <td><%= rsxx.getString("num_ban")%></td>
-                <td>$ <fmt:formatNumber value="<%= rsxx.getString("precio")%>" /> </td>
+                    while (rsxx.next()) {
                     
+
+                    int idxxx = Integer.parseInt(rsxx.getString("id"));
+//                    String n_camx = (String)request.getAttribute("num_cam");
+//                    String n_banx = (String)request.getAttribute("num_ban");
+
+                    PreparedStatement qxxx;
+                    ResultSet rsxxx;
+//                    qxxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + (Integer)request.getAttribute("num_cam") + " && num_ban = " + (Integer)request.getAttribute("num_hab") + "");
+//                    qxxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + n_camx + " && num_ban = " + n_banx + "");
+                    qxxx = con.prepareStatement("select * from reservacion where id_habitacion = " + idxxx + "");
+                    rsxxx = qxxx.executeQuery();
+
+                    while (rsxxx.next()) { %>
+                    
+                       <tr>
+                           <th scope="row"></th>
+                        
+                           <td><img class="img-thumbnail" style="max-width: 150px; height: auto" src="images/<%= rsxs.getString("imagen")%>" alt="Card image cap"></td> <%
+                                 %> <td> <%= rsxs.getString("nombre")%> </td>
+
+                           <td><%= rsxx.getString("tipo")%></td>
+                           <td><%= rsxx.getString("num_cam")%></td>
+                           <td><%= rsxx.getString("num_ban")%></td>
+                           <td>$ <fmt:formatNumber value="<%= rsxx.getString("precio")%>" /> </td>
+
+                           <td><button type="button" class="btn btn-success">Reservar</button></td>
+                       </tr>
+                
                     <%
                     }
-                %>
-
-                <td><button type="button" class="btn btn-success">Reservar</button></td>
-            </tr>
-
-
-            <% }%>
+                 }
+            }%>
         </tbody>
 
     </table>
