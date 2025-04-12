@@ -88,7 +88,7 @@ public class session extends HttpServlet {
                             session.setAttribute("id_usux", id_usu);
                             session.setAttribute("filtro", 0);
                             
-                            if(tipox == "Administrador"){
+                            if("Administrador".equals(tipox)){
                                RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
                                rd.forward(request, response);
                             }else{
