@@ -89,10 +89,9 @@ public class session extends HttpServlet {
                             session.setAttribute("filtro", 0);
                             
                             if("Administrador".equals(tipox)){
-                               RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
+                               RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac.jsp");
                                rd.forward(request, response);
                             }else{
-//                               RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
                                RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
                                rd.forward(request, response);
                             }
