@@ -16,6 +16,22 @@
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>servlet.NewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>crud_usuarios</servlet-name>
+        <servlet-class>servlet.crud_usuarios</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>session</servlet-name>
+        <servlet-class>servlet.session</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cerrar_sesion</servlet-name>
+        <servlet-class>servlet.cerrar_sesion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>crud_resrevas</servlet-name>
+        <servlet-class>servlet.crud_resrevas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>buscar</servlet-name>
         <url-pattern>/buscar</url-pattern>
@@ -31,6 +47,22 @@
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crud_usuarios</servlet-name>
+        <url-pattern>/crud_usuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>session</servlet-name>
+        <url-pattern>/session</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cerrar_sesion</servlet-name>
+        <url-pattern>/cerrar_sesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crud_resrevas</servlet-name>
+        <url-pattern>/crud_resrevas</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
