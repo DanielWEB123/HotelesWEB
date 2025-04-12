@@ -26,10 +26,40 @@ public class controller extends HttpServlet {
             case 1: {
                 request.setAttribute("Ciudad", request.getParameter("ciudad"));
                 request.setAttribute("f_ini", request.getParameter("f_ini"));
-                request.setAttribute("f_ter", request.getParameter("f_ter"));
+                request.setAttribute("f_term", request.getParameter("f_term"));
                 request.setAttribute("num_cam", request.getParameter("num_cam"));
                 request.setAttribute("num_ban", request.getParameter("num_ban"));
-//                request.setAttribute("id_usu", request.getParameter("id_usu"));
+                request.setAttribute("filtro", 1);
+
+                String id_usux = request.getParameter("id_usu");
+                request.setAttribute("id_usux", id_usux);
+                
+                RequestDispatcher rd = request.getRequestDispatcher("filtro_index.jsp");
+                rd.forward(request, response);
+                break;
+            }
+
+            case 111: {//ir a INICIAR SESION
+ 
+                String id_xxx = request.getParameter("tot");
+                request.setAttribute("Id", request.getParameter("id_usu"));
+                request.setAttribute("Id_Habitac", request.getParameter("id_hab"));
+                request.setAttribute("Inicio", request.getParameter("f_ini"));
+                request.setAttribute("Termino", request.getParameter("f_term"));
+                request.setAttribute("Total", request.getParameter("tot"));
+
+                RequestDispatcher rd = request.getRequestDispatcher("crud_resrevas");
+                rd.forward(request, response);
+                break;
+            }
+            
+            case 3: {//ir a CREAR USUARIO
+
+                request.setAttribute("Ciudad", request.getParameter("ciudad"));
+                request.setAttribute("f_ini", request.getParameter("f_ini"));
+                request.setAttribute("f_term", request.getParameter("f_term"));
+                request.setAttribute("num_cam", request.getParameter("num_cam"));
+                request.setAttribute("num_ban", request.getParameter("num_ban"));
                 request.setAttribute("filtro", 1);
 
                 String id_usux = request.getParameter("id_usu");
@@ -40,31 +70,7 @@ public class controller extends HttpServlet {
                 break;
             }
 
-//            case 2: {//ir a INICIAR SESION
-//                RequestDispatcher rd = request.getRequestDispatcher("sesion.jsp");
-//                rd.forward(request, response);
-//                break;
-//            }
-//            case 3: {//ir a CREAR USUARIO
-//                request.setAttribute("Nombre", request.getParameter("nom"));
-//                request.setAttribute("Correo", request.getParameter("mail"));
-//                request.setAttribute("Passw", request.getParameter("pass"));
-//                request.setAttribute("Celular", request.getParameter("cel"));
-
-//                RequestDispatcher rd = request.getRequestDispatcher("crud_usuarios");
-//                rd.forward(request, response);
-//                break;
-//            }
-
 //            case 4: {//Ir a CREAR USUARIO COMO ADMINISTRADOR
-//                request.setAttribute("Nombre", request.getParameter("nom"));
-//                request.setAttribute("Correo", request.getParameter("mail"));
-//                request.setAttribute("Passw", request.getParameter("pass"));
-//                request.setAttribute("Celular", request.getParameter("cel"));
-//                request.setAttribute("Tipo", request.getParameter("tipo"));
-
-//                RequestDispatcher rd = request.getRequestDispatcher("crud_usuarios");
-//                rd.forward(request, response);
 //                break;
 //            }
 
@@ -114,17 +120,10 @@ public class controller extends HttpServlet {
             }
 
             default: {
-
                 System.out.println("Opcion incorrecta");
-
             }
-
         }//cierra SWITCH
-
     }
-
-    
-    
     
     
     @Override
@@ -136,6 +135,8 @@ public class controller extends HttpServlet {
         switch (opcion) {
 
             case 11: {
+                request.setAttribute("Camas", request.getParameter("camasx"));
+                
                 RequestDispatcher rd = request.getRequestDispatcher("session");
                 rd.forward(request, response);
                 break;
@@ -163,11 +164,6 @@ public class controller extends HttpServlet {
                 rd.forward(request, response);
                 break;
             }
-            
-            
-            
-            
-            
             
             default: {
                 System.out.println("Opcion incorrecta");

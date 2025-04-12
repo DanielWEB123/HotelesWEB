@@ -29,15 +29,37 @@
                     <th scope="col"></th>
                     <th scope="col">
 
-             <center>
-            <h4>nombre USUARIOS</h4>
+            <form class="row g-3" action="cerrar_sesion" method="get">
+                <input type="hidden" name="opcion" value=2 />
+                <button type="input" class="btn btn-danger">Cerrar Session</button>
+            </form>
+
             <br>
-                <a class="nav-link" style="color: blue" href="index.jsp">Volver a INICIO</a>
+            <center>
+                <h4>ADMINISTRADOR: ${usuariox}</h4>
             </center>
-        </th>
-    </tr>
-</thead>
+
+        </tr>
+    </thead>
 </table>    
+
+
+<center><h3> INFORMACION DE USUARIOS</h3></center>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">
+               <form action="new_usuario_adm.jsp">
+                   <button type="input" class="btn btn-secondary">Crear Usuario</button>
+                </form>
+            </th>
+            <th scope="col"><a href="filtro_habitac.jsp" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">HABITACIONES</a></th>
+            <th scope="col"><a href="filtro_reservas.jsp" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">RESERVAS</a></th>
+        </tr>
+    </thead>
+</table>
 
 
 <%
@@ -57,11 +79,7 @@
 
 %>
 
-
-<h3>ADMINISTRADOR DE USUARIOS</h3>
-<form action="new_usuario_adm.jsp">
-<button type="input" class="btn btn-secondary">Crear Usuario</button>
-</form>
+<br>
 
 <table class="table">
     <thead>
@@ -81,7 +99,7 @@
         <% while (rs.next()) {%>
 
         <tr>
-            <th scope="row"><%= rs.getString("id")%></th>
+            <th scope="row"></th>
             <td><%= rs.getString("nombre")%></td>
             <td><%= rs.getString("mail")%></td>
             <td><%= rs.getString("password")%></td>

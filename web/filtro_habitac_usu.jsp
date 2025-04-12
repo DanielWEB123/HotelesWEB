@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.sql.Date"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -24,6 +26,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
     </head>
 
     <body>
@@ -43,84 +46,84 @@
 
             <br>
             <center>
-                <h4>${usuariox}</h4>
+                <h4>USUARIO: ${usuariox}</h4>
             </center>
 
         </tr>
     </thead>
 </table>    
 
-    <center> 
-       <img src="images/reserva.jpg" alt="Card image cap">    
-    </center>
-   
-    <div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
+<center> 
+    <img src="images/reserva.jpg" alt="Card image cap">    
+</center>
 
-        <%
-            Connection con;
-            String url = "jdbc:mysql://localhost:3306/bd_hoteles";
-            String Driver = "com.mysql.jdbc.Driver";
-            String user = "root";
-            String clave = "dan123";
-            Class.forName(Driver);
-            con = DriverManager.getConnection(url, user, clave);
+<div class="row row-cols-1 row-cols-md-5 g-4 justify-content-center">
 
-            PreparedStatement ps;
-            ResultSet rs;
+    <%
+        Connection con;
+        String url = "jdbc:mysql://localhost:3306/bd_hoteles";
+        String Driver = "com.mysql.jdbc.Driver";
+        String user = "root";
+        String clave = "dan123";
+        Class.forName(Driver);
+        con = DriverManager.getConnection(url, user, clave);
+
+        PreparedStatement ps;
+        ResultSet rs;
 
 //            int id_usux = Integer.parseInt((String)request.getAttribute("id_usu"));
-            String id_usux = (String)session.getAttribute("id_usux");
-            
-            ps = con.prepareStatement("select * from reservacion where id_usuario = " + id_usux + "");
-            rs = ps.executeQuery();
+        String id_usux = (String) session.getAttribute("id_usux");
 
-            while (rs.next()) {%>
+        ps = con.prepareStatement("select * from reservacion where id_usuario = " + id_usux + "");
+        rs = ps.executeQuery();
 
-        <div class="card">
-            <%
+        while (rs.next()) {%>
 
-                int id_habitacionx = Integer.parseInt(rs.getString("id_habitacion"));
+    <div class="card">
+        <%
 
-                PreparedStatement qx;
-                ResultSet rsx;
-                qx = con.prepareStatement("select * from habitacion where id = " + id_habitacionx + "");
-                rsx = qx.executeQuery();
+            int id_habitacionx = Integer.parseInt(rs.getString("id_habitacion"));
 
-                if (rsx.next()) {
+            PreparedStatement qx;
+            ResultSet rsx;
+            qx = con.prepareStatement("select * from habitacion where id = " + id_habitacionx + "");
+            rsx = qx.executeQuery();
 
-                    int id_hotelx = Integer.parseInt(rsx.getString("id_hotel"));
+            if (rsx.next()) {
 
-                    PreparedStatement qxx;
-                    ResultSet rsxx;
-                    qxx = con.prepareStatement("select * from hoteles where id = " + id_hotelx + "");
-                    rsxx = qxx.executeQuery();
+                int id_hotelx = Integer.parseInt(rsx.getString("id_hotel"));
 
-                    if (rsxx.next()) { %>
+                PreparedStatement qxx;
+                ResultSet rsxx;
+                qxx = con.prepareStatement("select * from hoteles where id = " + id_hotelx + "");
+                rsxx = qxx.executeQuery();
 
-                       <div class="card-body">
-                       <h5 class="card-title"><%= rsxx.getString("nombre")%></h5>
-                       <img src="images/<%= rsxx.getString("categ")%>.jpg">
-                       </div>
-                       <img class="card-img-top" src="images/<%= rsxx.getString("imagen")%>" alt="Card image cap">
-                       <div class="card-body">
+                if (rsxx.next()) {%>
 
-                           <h6 class="card-title">Habitación: <%= rsx.getString("tipo")%></h6>
-                           <h6 class="card-title">N° Habitac: <%= rsx.getString("num_cam")%> - N° Baños: <%= rsx.getString("num_ban")%></h6>
-                           Ingreso: <fmt:formatDate value="<%= rs.getDate("fecha_ingreso")%>" pattern="dd-MM-yyyy" /><br> 
-                           Salida: <fmt:formatDate value="<%= rs.getDate("fecha_salida")%>" pattern="dd-MM-yyyy" /><br> 
-                           <h6 class="card-title">Valor: $ <fmt:formatNumber value="<%= rsx.getString("precio")%>" /></h6> 
-                       
-                       <% }
-                } %>
-
-            </div>
-            <div class="nav">
-                <button type="button" class="btn btn-warning">Anular</button>
-            </div>
+        <div class="card-body">
+            <h5 class="card-title"><%= rsxx.getString("nombre")%></h5>
+            <img src="images/<%= rsxx.getString("categ")%>.jpg">
         </div>
-        <%}%>
+        <img class="card-img-top" src="images/<%= rsxx.getString("imagen")%>" alt="Card image cap">
+        <div class="card-body">
+
+            <h6 class="card-title">Habitación: <%= rsx.getString("tipo")%></h6>
+            <h6 class="card-title">N° Habitac: <%= rsx.getString("num_cam")%> - N° Baños: <%= rsx.getString("num_ban")%></h6>
+            Ingreso: <fmt:formatDate value="<%= rs.getDate("fecha_ingreso")%>" pattern="dd-MM-yyyy" /><br> 
+            Salida: <fmt:formatDate value="<%= rs.getDate("fecha_salida")%>" pattern="dd-MM-yyyy" /><br> 
+            <h6 class="card-title">Valor: $ <fmt:formatNumber value="<%= rsx.getString("precio")%>" /></h6> 
+
+            <% }
+                           } %>
+
+        </div>
+        <div class="nav">
+            <button type="button" class="btn btn-warning">Anular</button>
+        </div>
     </div>
-    
+    <%}%>
+</div>
+
 <br><br>
 
 <table class="table table-success table-striped">
@@ -157,7 +160,7 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input name="f_term" type="date" class="form-control"/>
+                            <input name="f_term" type="date" class="form-control" onkeypress="dias()"/>
                             <label for="floatingSelectGrid">Fecha Termino</label>
                         </div>
                     </div>
@@ -185,7 +188,7 @@
                     </div>
 
                     <input type="hidden" name="id_usu" value=${id_usu} />
-                    <input type="hidden" name="opcion" value=1 />
+                    <input type="hidden" name="opcion" value=3 />
 
                     <div class="col-auto">
                         <button type="submit" class="btn btn-secondary btn-lg">Buscar</button>
@@ -216,27 +219,28 @@
                 <th scope="col">N° BAÑOS</th>
                 <th scope="col">VALOR $ DIA</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
 
-            
+
             <%
 
                 PreparedStatement psxs;
                 ResultSet rsxs;
 
 //                String ciux = request.getParameter("Ciudad");
-                String ciux = (String)request.getAttribute("Ciudad");
-                
+                String ciux = (String) request.getAttribute("Ciudad");
+
                 psxs = con.prepareStatement("select * from hoteles where ubicacion = '" + ciux + "'");
                 rsxs = psxs.executeQuery();
 
                 while (rsxs.next()) {
 
                     int idxx = Integer.parseInt(rsxs.getString("id"));
-                    String n_camx = (String)request.getAttribute("num_cam");
-                    String n_banx = (String)request.getAttribute("num_ban");
+                    String n_camx = (String) request.getAttribute("num_cam");
+                    String n_banx = (String) request.getAttribute("num_ban");
 
                     PreparedStatement qxx;
                     ResultSet rsxx;
@@ -246,42 +250,68 @@
                     rsxx = qxx.executeQuery();
 
                     while (rsxx.next()) {
-                    
 
-                    int idxxx = Integer.parseInt(rsxx.getString("id"));
-//                    String n_camx = (String)request.getAttribute("num_cam");
-//                    String n_banx = (String)request.getAttribute("num_ban");
+                        int idxxx = Integer.parseInt(rsxx.getString("id"));
+                        String f_inix = (String) request.getAttribute("f_ini");
+                        String f_termx = (String) request.getAttribute("f_term");
 
-                    PreparedStatement qxxx;
-                    ResultSet rsxxx;
-//                    qxxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + (Integer)request.getAttribute("num_cam") + " && num_ban = " + (Integer)request.getAttribute("num_hab") + "");
-//                    qxxx = con.prepareStatement("select * from habitacion where id_hotel = " + idxx + " && num_cam = " + n_camx + " && num_ban = " + n_banx + "");
-                    qxxx = con.prepareStatement("select * from reservacion where id_habitacion = " + idxxx + "");
-                    rsxxx = qxxx.executeQuery();
+//                    Date f_inixx = (Date)request.getAttribute("f_ini");
+                        //                   Date f_termxx = (Date)request.getAttribute("f_term");
+///                    int differenceInDays = (int) ((f_termxx.getTime() - f_inixx.getTime())/(1000*60*60*24));
+        //            int total = f_inixx - f_termxx;
+//                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        //                 String fecha = formato.format(f_inix);                    
+                        //                   long fechaInicial = f_inixx.getTime(); //Tanto fecha inicial como fecha final son Date.
+//long fechaFinal = f_termxx.getTime();
+//long diferencia = fechaFinal - fechaInicial;
+//double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                        PreparedStatement qxxx;
+                        ResultSet rsxxx;
+                        qxxx = con.prepareStatement("select * from reservacion where id_habitacion = " + idxxx + " && ((fecha_ingreso < '" + f_inix + "' && fecha_salida < '" + f_termx + "') || (fecha_ingreso > '" + f_inix + "' && fecha_salida > '" + f_termx + "'))");
+//                    qxxx = con.prepareStatement("select * from reservacion where id_habitacion = " + idxxx + "");
+                        rsxxx = qxxx.executeQuery();
 
-                    while (rsxxx.next()) { %>
-                    
-                       <tr>
-                           <th scope="row"></th>
-                        
-                           <td><img class="img-thumbnail" style="max-width: 150px; height: auto" src="images/<%= rsxs.getString("imagen")%>" alt="Card image cap"></td> <%
-                                 %> <td> <%= rsxs.getString("nombre")%> </td>
+                        while (rsxxx.next()) {%>
 
-                           <td><%= rsxx.getString("tipo")%></td>
-                           <td><%= rsxx.getString("num_cam")%></td>
-                           <td><%= rsxx.getString("num_ban")%></td>
-                           <td>$ <fmt:formatNumber value="<%= rsxx.getString("precio")%>" /> </td>
+            <tr>
+                <th scope="row"></th>
 
-                           <td><button type="button" class="btn btn-success">Reservar</button></td>
-                       </tr>
+                <td><img class="img-thumbnail" style="max-width: 150px; height: auto" src="images/<%= rsxs.getString("imagen")%>" alt="Card image cap"></td> <%
+                %> <td> <%= rsxs.getString("nombre")%> </td>
+
+                <td><%= rsxx.getString("tipo")%></td>
+                <td><%= rsxx.getString("num_cam")%></td>
+                <td><%= rsxx.getString("num_ban")%></td>
+                <td>$ <fmt:formatNumber value="<%= rsxx.getString("precio")%>" /> </td>
+
+                <td><a class="nav-link" style="color: blue" href="hotel.jsp">Ver Habitacion</a></td>
                 
-                    <%
-                    }
-                 }
-            }%>
-        </tbody>
+        <form action="controller" method="get">
 
-    </table>
+            <input type="hidden" name="id_usu"  value="<%=(String) session.getAttribute("id_usux")%>" />
+            <input type="hidden" name="id_hab"  value="<%=idxxx %>" />
+            <input type="hidden" name="f_ini"  value="<%=f_inix %>" />
+            <input type="hidden" name="f_ini"  value="<%=f_termx %>" />
+            <input type="hidden" name="tot"  value="<%=rsxx.getString("precio")%> %>" />
+
+            <input type="hidden" name="opcion" value=111 />
+
+            <td><button type="input" class="btn btn-success">Reservar</button></td>
+        </form>
+
+    </tr>
+
+    <%
+                                }
+                            }
+                        }%>
+
+
+
+
+</tbody>
+
+</table>
 
 </c:if>
 

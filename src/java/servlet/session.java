@@ -79,17 +79,24 @@ public class session extends HttpServlet {
 
                             String id_usu = results.getString("id");
                             String nombre = results.getString("nombre");
+                            String tipox = results.getString("tipo");
+                            
                             Usuario usu = new Usuario(nombre, mail, id_usu);
                             HttpSession session = request.getSession();
                             session.setAttribute("usuario", usu);
                             session.setAttribute("usuariox", nombre);
                             session.setAttribute("id_usux", id_usu);
                             session.setAttribute("filtro", 0);
-//                            request.setAttribute("id_usux", id_usu);
-
-                            RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
-                            rd.forward(request, response);
-
+                            
+                            if(tipox == "Administrador"){
+                               RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
+                               rd.forward(request, response);
+                            }else{
+//                               RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
+                               RequestDispatcher rd = request.getRequestDispatcher("filtro_habitac_usu.jsp");
+                               rd.forward(request, response);
+                            }
+                            
                         } else {
                             
                             String xxx = "CREDENCIALES INCORRECTAS ! ";
@@ -98,19 +105,13 @@ public class session extends HttpServlet {
 
                             RequestDispatcher rd = request.getRequestDispatcher("sesion.jsp");
                             rd.forward(request, response);
-
                         }
-
                     } catch (Exception e) {
                     }
-
                 } catch (Exception e) {
                 }
-
             } else {
-
             }
-
         }
     }
 

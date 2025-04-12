@@ -3,7 +3,7 @@
 
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>TU HOTEL</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -126,7 +126,7 @@
             <p class="card-text">Descubre el paraíso junto al mar en la costa central chilena desde el Sheraton Miramar Hotel & Convention Center.</p>
         </div>
         <div class="nav">
-            <a class="nav-link" href="programador.jsp">Ver en Detalle...</a>
+            <a class="nav-link" href="hotel.jsp">Ver en Detalle...</a>
         </div>
     </div>
 
@@ -138,7 +138,7 @@
             <p class="card-text">AYCA LA FLORA es un hotel boutique con un amplio e idílico jardín y vistas a los cerros y al puerto de Valparaíso.</p>
         </div>
         <div class="nav">
-            <a class="nav-link" href="redes.jsp" target="descripcion">Ver en Detalle...</a>
+            <a class="nav-link" href="hotel.jsp" target="descripcion">Ver en Detalle...</a>
         </div>
     </div>
 
@@ -150,7 +150,7 @@
             <p class="card-text">El Eurotel está en Las Condes, el centro financiero y zona gastronómica más importante de Santiago de Chile.</p>
         </div>
         <div class="nav">
-            <a class="nav-link" href="web.jsp" target="descripcion">Ver en Detalle...</a>
+            <a class="nav-link" href="hotel.jsp" target="descripcion">Ver en Detalle...</a>
         </div>
     </div>
 
@@ -162,7 +162,7 @@
             <p class="card-text">El Hotel Kennedy está ubicado en Santiago, en un barrio residencial en el hermoso sector oriente de la capital.</p>
         </div>
         <div class="nav">
-            <a class="nav-link" href="soporte.jsp" target="descripcion">Ver en Detalle...</a>
+            <a class="nav-link" href="hotel.jsp" target="descripcion">Ver en Detalle...</a>
         </div>
     </div>
 
@@ -174,7 +174,7 @@
             <p class="card-text">Novotel se encuentra ubicado a unos minutos de la plaza de Viña del Mar, que es considerada unas de las ciudades más turísticas del pais.</p>
         </div>
         <div class="nav">
-            <a class="nav-link" href="soporte.jsp" target="descripcion">Ver en Detalle...</a>
+            <a class="nav-link" href="hotel.jsp" target="descripcion">Ver en Detalle...</a>
         </div>
     </div>
 
