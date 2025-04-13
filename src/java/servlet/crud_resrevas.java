@@ -60,19 +60,16 @@ public class crud_resrevas extends HttpServlet {
 
         if (opcion == 111) {
 
-                
-                
                 int id_usu = Integer.parseInt(request.getParameter("id_usu"));
                 int id_hab = Integer.parseInt(request.getParameter("id_hab"));
                 String f_ini = request.getParameter("f_ini");
                 String f_term = request.getParameter("f_term");
-                int tot = 50000;
+                int tot = Integer.parseInt(request.getParameter("tot"));
 
                   try {
                 set = con.createStatement();
 
-//                        String q = "insert into reservacion (id_usuario,id_habitacion,fecha_ingreso,fecha_termino) values (" + id_usu + "," + id_hab + ",'" + f_ini + "','" + f_term + "')";
-                        String q = "insert into reservacion (id_usuario,id_habitacion) values (" + id_usu + "," + id_hab + ")";
+                        String q = "insert into reservacion (id_usuario,id_habitacion,fecha_ingreso,fecha_salida,total) values (" + id_usu + "," + id_hab + ",'" + f_ini + "','" + f_term + "'," + tot + ")";
                         set.executeUpdate(q);
 
                     } catch (SQLException e) {
