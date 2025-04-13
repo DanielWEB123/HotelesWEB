@@ -291,7 +291,7 @@
             <input type="hidden" name="id_usu"  value="<%=(String) session.getAttribute("id_usux")%>" />
             <input type="hidden" name="id_hab"  value="<%=idxxx %>" />
             <input type="hidden" name="f_ini"  value="<%=f_inix %>" />
-            <input type="hidden" name="f_ini"  value="<%=f_termx %>" />
+            <input type="hidden" name="f_term"  value="<%=f_termx %>" />
             <input type="hidden" name="tot"  value="<%=rsxx.getString("precio")%> %>" />
 
             <input type="hidden" name="opcion" value=111 />
